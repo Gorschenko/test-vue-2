@@ -40,6 +40,7 @@ export default {
   justify-content: space-between;
   width: 100%;
   margin-bottom: 16px;
+
   &__title {
     font-size: 28px;
     line-height: 35px;
@@ -67,6 +68,14 @@ export default {
       &:hover, &:focus {
         outline: 2px solid rgba(180, 180, 180, 1);
       }
+    }
+  }
+}
+@media (max-width: 768px) {
+  .header {
+    display: block;
+    &__title {
+      margin-bottom: 16px;
     }
   }
 }

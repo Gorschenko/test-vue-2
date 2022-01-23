@@ -123,4 +123,14 @@ body {
     max-width: 1028px;
   }
 }
+
+@media (max-width: 768px) {
+  .main {
+    display: block;
+    &__form {
+      min-width: 100%;
+      margin-bottom: 16px;
+    }
+  }
+}
 </style>

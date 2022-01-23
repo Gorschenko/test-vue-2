@@ -99,7 +99,7 @@ export default {
     }
   }
 }
-// animation
+// Стили для анимации
 .list-item {
   transition: all 0.8s ease;
 }
@@ -107,5 +107,20 @@ export default {
 .list-leave-to {
   opacity: 0;
   transform: translateY(100px);
+}
+// Адаптивная верстка
+@media (max-width: 1280px) {
+  .list__item {
+    width: calc(100%/2 - 16px);
+  }
+}
+@media (max-width: 1024px) {
+  .list {
+    margin: 0;
+    &__item {
+      width: 100%;
+      margin: 0 0 16px 0;
+    }
+  }
 }
 </style>
