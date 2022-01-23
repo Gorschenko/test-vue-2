@@ -49,8 +49,8 @@ export default {
       products.value.splice(products.value.length, 0, product)
       saveProducts()
     }
-    const deleteProduct = idx => {
-      products.value.splice(idx, 1)
+    const deleteProduct = product => {
+      products.value = products.value.filter(p => p.name !== product.name)
       saveProducts()
     }
     // Сохранение данных в localStorage

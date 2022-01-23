@@ -1,7 +1,7 @@
 <template>
-<transition-group class="list" name="lis" tag="ul">
-  <li class="list__item lis-item" v-for="(product, idx) in products" :key="product">
-    <div class="list__item-remove" @click="$emit('delete-product', idx)">
+<transition-group class="list" name="list" tag="ul">
+  <li class="list__item list-item" v-for="product in products" :key="product">
+    <div class="list__item-remove" @click="$emit('delete-product', product)">
       <img src="../assets/remove.svg">
     </div>
     <div
@@ -100,11 +100,11 @@ export default {
   }
 }
 // animation
-.lis-item {
+.list-item {
   transition: all 0.8s ease;
 }
-.lis-enter-from,
-.lis-leave-to {
+.list-enter-from,
+.list-leave-to {
   opacity: 0;
   transform: translateY(100px);
 }
