@@ -184,6 +184,7 @@ export default {
     transition: 0.5s;
 
     &:hover {
+      transform: translateX(5px);
       background: rgb(61, 177, 43);
     }
     

@@ -1,6 +1,6 @@
 <template>
-<ul class="list">
-  <li class="list__item" v-for="(product, idx) in products" :key="product">
+<transition-group class="list" name="lis" tag="ul">
+  <li class="list__item lis-item" v-for="(product, idx) in products" :key="product">
     <div class="list__item-remove" @click="$emit('delete-product', idx)">
       <img src="../assets/remove.svg">
     </div>
@@ -11,10 +11,10 @@
     <div class="list__item-content">
       <h3 class="list__item-content-title">{{ product.name }}</h3>
       <p class="list__item-content-description">{{ product.description }}</p>
-      <span class="list__item-content-price">{{ product.price }} руб.</span>
+      <h2 class="list__item-content-price">{{ product.price }} руб.</h2>
     </div>
   </li>
-</ul>
+</transition-group>
 </template>
 
 <script>
@@ -98,5 +98,14 @@ export default {
       }
     }
   }
+}
+// animation
+.lis-item {
+  transition: all 0.8s ease;
+}
+.lis-enter-from,
+.lis-leave-to {
+  opacity: 0;
+  transform: translateY(100px);
 }
 </style>
