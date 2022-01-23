@@ -3,7 +3,6 @@
     <TheHeader
       v-model="sorting"
     />
-    <div>{{ sorting }}</div>
     <main class="main">
       <AppForm
         class="main__form"
@@ -21,13 +20,30 @@
 import TheHeader from './components/TheHeader'
 import AppForm from './components/AppForm'
 import AppList from './components/AppList'
-import {ref, computed} from 'vue'
+import {ref, computed, onMounted} from 'vue'
 
 export default {
   setup() {
+    onMounted(() => {
+      if (localStorage.getItem('products')) {
+        try {
+          products.value = JSON.parse(localStorage.getItem('products'))
+        } catch(e) {
+          localStorage.removeItem('products')
+        }
+      }
+    })
     const products = ref([])
-    const addProduct = product => products.value.splice(products.value.length, 0, product)
-    const deleteProduct = idx => products.value.splice(idx, 1)
+
+    const addProduct = product => {
+      products.value.splice(products.value.length, 0, product)
+      saveProducts()
+    }
+    const deleteProduct = idx => {
+      products.value.splice(idx, 1)
+      saveProducts()
+    }
+    const saveProducts = () => localStorage.setItem('products', JSON.stringify(products.value))
 
     const sorting = ref('default')
     const sortedProducts = computed(() => {
@@ -47,6 +63,7 @@ export default {
       products,
       addProduct,
       deleteProduct,
+      saveProducts,
       sorting,
       sortedProducts
     }
