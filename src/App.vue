@@ -1,6 +1,9 @@
 <template>
   <div class="wrapper">
-    <TheHeader/>
+    <TheHeader
+      v-model="sorting"
+    />
+    <div>{{ sorting }}</div>
     <main class="main">
       <AppForm
         class="main__form"
@@ -8,7 +11,8 @@
       />
       <AppList
         class="main__list"
-        :products="products"
+        :products="sortedProducts"
+        @delete-product="deleteProduct"
       />
     </main>
   </div>
@@ -17,19 +21,34 @@
 import TheHeader from './components/TheHeader'
 import AppForm from './components/AppForm'
 import AppList from './components/AppList'
-import {ref} from 'vue'
+import {ref, computed} from 'vue'
 
 export default {
   setup() {
     const products = ref([])
-    const addProduct = product => {
-      console.log(product)
-      products.value.push(product)
-      console.log(products.value)
-    }
+    const addProduct = product => products.value.splice(products.value.length, 0, product)
+    const deleteProduct = idx => products.value.splice(idx, 1)
+
+    const sorting = ref('default')
+    const sortedProducts = computed(() => {
+      if (sorting.value === 'max') {
+        return products.value.slice().sort((a, b) => Number(a.price) - Number(b.price))
+      }
+      if (sorting.value === 'min') {
+        return products.value.slice().sort((a, b) => Number(b.price) - Number(a.price))
+      }
+      if (sorting.value === 'name') {
+        return products.value.slice().sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : -1)
+      }
+      return products.value
+    })
+
     return {
       products,
-      addProduct
+      addProduct,
+      deleteProduct,
+      sorting,
+      sortedProducts
     }
   },
   components: { TheHeader, AppForm, AppList }
