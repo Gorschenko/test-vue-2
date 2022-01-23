@@ -62,6 +62,11 @@ export default {
       background: rgba(255, 132, 132, 1);
       border-radius: 10px;
       box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+      transition: 0.25s;
+      
+      &:hover {
+        background: rgb(223, 48, 48);
+      }
     }
 
     &-image {
