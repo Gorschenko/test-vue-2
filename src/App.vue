@@ -28,7 +28,7 @@ import {ref, computed, onMounted} from 'vue'
 export default {
   setup() {
     const loading = ref(null)
-    // Подгрузка данных из localStorage, инициализация loader
+    // Загрузка данных из localStorage, инициализация loader
     onMounted(() => {
       loading.value = true
       setTimeout(() => {
@@ -42,7 +42,9 @@ export default {
       loading.value = false
       }, 600)
     })
-
+    // Сохранение данных в localStorage
+    const saveProducts = () => localStorage.setItem('products', JSON.stringify(products.value))
+    
     const products = ref([])
     // Основной функционал: добавление и удаление товара
     const addProduct = product => {
@@ -53,8 +55,7 @@ export default {
       products.value = products.value.filter(p => p.name !== product.name)
       saveProducts()
     }
-    // Сохранение данных в localStorage
-    const saveProducts = () => localStorage.setItem('products', JSON.stringify(products.value))
+    
     // Сортировка
     const sorting = ref('default')
     const sortedProducts = computed(() => {

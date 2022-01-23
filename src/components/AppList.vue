@@ -11,7 +11,7 @@
     <div class="list__item-content">
       <h3 class="list__item-content-title">{{ product.name }}</h3>
       <p class="list__item-content-description">{{ product.description }}</p>
-      <h2 class="list__item-content-price">{{ product.price }} руб.</h2>
+      <h2 class="list__item-content-price">{{ Number(product.price).toLocaleString() }} руб.</h2>
     </div>
   </li>
 </transition-group>
