@@ -40,7 +40,7 @@ export default {
         }
       }
       loading.value = false
-      }, 750)
+      }, 600)
     })
 
     const products = ref([])
