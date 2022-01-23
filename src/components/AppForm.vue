@@ -69,14 +69,15 @@ export default {
     const price = ref('')
     const isDisabled = computed(() => !name.value || !image.value || !price.value)
 
-    const addProduct = () => {
+    const addProduct = (event) => {
       context.emit('add-product', {
         name: name.value,
         description: description.value,
         image: image.value,
         price: price.value
       })
-      
+      // Сброс полей формы
+      event.target.reset()
     }
     
     return {

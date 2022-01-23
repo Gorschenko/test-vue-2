@@ -9,10 +9,12 @@
         @add-product="addProduct"
       />
       <AppList
+        v-if="!loading"
         class="main__list"
         :products="sortedProducts"
         @delete-product="deleteProduct"
       />
+      <AppLoader v-else/>
     </main>
   </div>
 </template>
@@ -20,11 +22,16 @@
 import TheHeader from './components/TheHeader'
 import AppForm from './components/AppForm'
 import AppList from './components/AppList'
+import AppLoader from './components/AppLoader'
 import {ref, computed, onMounted} from 'vue'
 
 export default {
   setup() {
+    const loading = ref(null)
+    // Подгрузка данных из localStorage, инициализация loader
     onMounted(() => {
+      loading.value = true
+      setTimeout(() => {
       if (localStorage.getItem('products')) {
         try {
           products.value = JSON.parse(localStorage.getItem('products'))
@@ -32,9 +39,12 @@ export default {
           localStorage.removeItem('products')
         }
       }
+      loading.value = false
+      }, 750)
     })
-    const products = ref([])
 
+    const products = ref([])
+    // Основной функционал: добавление и удаление товара
     const addProduct = product => {
       products.value.splice(products.value.length, 0, product)
       saveProducts()
@@ -43,8 +53,9 @@ export default {
       products.value.splice(idx, 1)
       saveProducts()
     }
+    // Сохранение данных в localStorage
     const saveProducts = () => localStorage.setItem('products', JSON.stringify(products.value))
-
+    // Сортировка
     const sorting = ref('default')
     const sortedProducts = computed(() => {
       if (sorting.value === 'max') {
@@ -60,6 +71,7 @@ export default {
     })
 
     return {
+      loading,
       products,
       addProduct,
       deleteProduct,
@@ -68,7 +80,7 @@ export default {
       sortedProducts
     }
   },
-  components: { TheHeader, AppForm, AppList }
+  components: { TheHeader, AppForm, AppList, AppLoader }
 }
 </script>
 
